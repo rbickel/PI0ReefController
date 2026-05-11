@@ -1,0 +1,65 @@
+# Example configuration — copy to config.yaml and edit.
+# All sensors below use the 'mock' driver so you can run end-to-end against an
+# MQTT broker on your laptop before plugging real hardware in.
+
+mqtt:
+  host: localhost
+  port: 1883
+  username: null
+  password: null
+  client_id: pi0-reef-controller
+  base_topic: reef
+  # Bridge-level LWT topic = <base_topic>/bridge/status
+  keepalive: 30
+  tls: false
+
+logging:
+  level: INFO            # DEBUG / INFO / WARNING / ERROR
+
+# Number of consecutive failures before a sensor is marked offline.
+failure_threshold: 3
+
+sensors:
+  - id: tank_main_temp
+    type: mock
+    interval: 5          # seconds
+    enabled: true
+    # Mock-specific knobs:
+    unit: "°C"
+    sensor_type: ds18b20 # what to advertise in the payload
+    min: 24.5
+    max: 26.0
+
+  - id: sump_ph
+    type: mock
+    interval: 10
+    enabled: true
+    unit: "pH"
+    sensor_type: redsea_ph
+    min: 8.0
+    max: 8.4
+
+  - id: sump_orp
+    type: mock
+    interval: 10
+    enabled: true
+    unit: "mV"
+    sensor_type: redsea_orp
+    min: 300
+    max: 380
+
+  - id: sump_salinity
+    type: mock
+    interval: 15
+    enabled: true
+    unit: "ppt"
+    sensor_type: redsea_salinity
+    min: 34.8
+    max: 35.2
+
+  # Real DS18B20 example (M2) — disabled until hardware is wired:
+  # - id: tank_main_temp
+  #   type: ds18b20
+  #   interval: 10
+  #   enabled: false
+  #   serial: "28-0000abcdef12"   # cat /sys/bus/w1/devices/
