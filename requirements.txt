@@ -1,2 +1,5 @@
 paho-mqtt>=2.1.0
 PyYAML>=6.0.1
+# smbus2 is only needed on the Pi (for EZO probes over I²C). Imported lazily
+# by reef_controller.sensors.ezo, so installing it on Windows is optional.
+smbus2>=0.4.3; platform_system == "Linux"

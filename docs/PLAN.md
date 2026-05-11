@@ -38,15 +38,21 @@ other MQTT-aware system.
 - Auto-discover probes by serial; map serial → friendly name in config.
 - Integration test guarded by `REEF_HW=1` env var.
 
-### M3 — Red Sea pH/Temperature probe
-- Confirm transport (I²C address vs. USB serial — depends on actual module).
-- Implement driver + calibration storage (offsets in config or persisted JSON).
+### M3 — Atlas EZO-pH probe (I²C)
+- Driver talks to the chip over I²C via `smbus2`.
+- Optional static temperature compensation; cross-sensor compensation deferred.
+- `reef-calibrate ph` CLI for in-situ 3-point calibration.
+- Default address `0x63`. EZO chips ship in UART mode → see WIRING.md for the
+  one-time switch to I²C.
 
 ### M4 — Red Sea ORP probe
 - Driver + calibration (single-point at 225 mV or 475 mV).
 
-### M5 — Red Sea Salinity/Temperature probe
-- Driver + temperature-compensated conductivity → salinity (ppt).
+### M5 — Atlas EZO-EC probe (salinity, I²C)
+- Driver returns one of `ec`, `tds`, `salinity`, `sg` per config.
+- Probe cell constant (K=1.0) set once and persisted on the chip.
+- `reef-calibrate ec` CLI: dry → low (12 880 µS/cm) → high (~80 000 µS/cm).
+- Temperature-compensated conductivity → salinity (PSU/ppt).
 
 ### M6 — Productionization
 - systemd unit, log rotation, Home Assistant MQTT-discovery payloads,

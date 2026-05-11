@@ -63,3 +63,24 @@ sensors:
   #   interval: 10
   #   enabled: false
   #   serial: "28-0000abcdef12"   # cat /sys/bus/w1/devices/
+
+  # Real EZO-pH on a Whitebox T5 (M3) — disabled until the chip is in I²C mode:
+  # - id: sump_ph
+  #   type: ezo_ph
+  #   interval: 15
+  #   enabled: false
+  #   address: 0x63
+  #   bus: 1
+  #   temperature_c: 25.0        # optional; static compensation. Future:
+  #                              # cross-feed from tank_main_temp.
+
+  # Real EZO-EC (salinity) — disabled until the chip is in I²C mode:
+  # - id: sump_salinity
+  #   type: ezo_ec
+  #   interval: 30
+  #   enabled: false
+  #   address: 0x64
+  #   bus: 1
+  #   probe_k: 1.0               # cell constant; one-time, also via the CLI
+  #   output: salinity           # ec | tds | salinity | sg
+  #   temperature_c: 25.0

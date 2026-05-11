@@ -17,9 +17,9 @@ Start here, in this order:
 ## Status
 - [x] M1 — MQTT skeleton with mocked sensors
 - [ ] M2 — DS18B20 driver
-- [ ] M3 — Red Sea pH/Temp driver
-- [ ] M4 — Red Sea ORP driver
-- [ ] M5 — Red Sea Salinity/Temp driver
+- [x] M3 — Atlas EZO-pH driver + calibration CLI
+- [ ] M4 — Atlas EZO-ORP driver
+- [x] M5 — Atlas EZO-EC (salinity) driver + calibration CLI
 
 ## Quick start (dev, on a laptop)
 
@@ -54,6 +54,33 @@ A systemd unit will be added in M6.
 ```powershell
 pytest
 ```
+
+## Probe calibration
+
+Once the EZO chips are wired up, calibrate them in-situ from the Pi:
+
+```bash
+sudo systemctl stop reef-controller   # if running as a service
+
+# pH (always start with the mid-point buffer)
+python -m reef_controller.cli.calibrate ph --mid 7.00
+python -m reef_controller.cli.calibrate ph --low 4.00
+python -m reef_controller.cli.calibrate ph --high 10.00
+
+# EC / salinity
+python -m reef_controller.cli.calibrate ec --probe-k 1.0
+python -m reef_controller.cli.calibrate ec --dry
+python -m reef_controller.cli.calibrate ec --low 12880
+python -m reef_controller.cli.calibrate ec --high 80000
+
+# Inspect / clear
+python -m reef_controller.cli.calibrate ph --status
+python -m reef_controller.cli.calibrate ec --clear
+```
+
+Calibration data lives on the EZO chip itself, so you can reflash the Pi
+without losing it. See [docs/WIRING.md](docs/WIRING.md) for the procedure
+and solutions to buy.
 
 ## Project layout
 ```

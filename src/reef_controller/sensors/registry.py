@@ -34,3 +34,5 @@ def build_sensor(cfg: SensorConfig) -> Sensor:
 # import-time side effects when only the base classes are needed.
 from . import mock  # noqa: E402,F401
 from . import ds18b20  # noqa: E402,F401
+from . import ezo_ph  # noqa: E402,F401
+from . import ezo_ec  # noqa: E402,F401
