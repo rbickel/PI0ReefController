@@ -3,8 +3,16 @@
 Python service for Raspberry Pi Zero that reads aquarium probes and publishes
 their values to an MQTT broker.
 
-See [docs/PLAN.md](docs/PLAN.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-for the full design.
+## Documentation
+
+Start here, in this order:
+
+| Doc | What's inside |
+|---|---|
+| [docs/PLAN.md](docs/PLAN.md) | Goals, constraints, milestones M1–M6, MQTT topic design, test strategy |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Module diagram, key abstractions (`Sensor`, `Reading`, `MqttClient`), failure-handling matrix |
+| [docs/WIRING.md](docs/WIRING.md) | Hardware bill of materials, Pi Zero pin map, wiring diagrams for the 4 probes, calibration notes |
+| [config.example.yaml](config.example.yaml) | Annotated template config — copy to `config.yaml` and edit |
 
 ## Status
 - [x] M1 — MQTT skeleton with mocked sensors
@@ -50,7 +58,12 @@ pytest
 ## Project layout
 ```
 src/reef_controller/   # application package
-docs/                  # design docs
+docs/                  # design docs — see Documentation section above
 tests/                 # pytest suite
 config.example.yaml    # template config
 ```
+
+## See also
+- [docs/PLAN.md](docs/PLAN.md) — roadmap & milestones
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — internal design
+- [docs/WIRING.md](docs/WIRING.md) — hardware & wiring
